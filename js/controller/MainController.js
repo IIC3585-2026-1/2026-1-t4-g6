@@ -1,5 +1,5 @@
-import { Note } from "../models/NoteModel";
-import { StorageManager } from "../utils/storage";
+import { Note } from "../models/NoteModel.js";
+import { StorageManager } from "../utils/storage.js";
 
 export class MainController {
     constructor() {
