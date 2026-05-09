@@ -1,12 +1,12 @@
 
 export class Note {
-    constructor({ id, title, content } = {}) {
+    constructor({ id, title, content, createdAt, updatedAt } = {}) {
         this.id = id || crypto.randomUUID();
-        this.id = content || "";
-        this.title = title;
+        this.content = content || "";
+        this.title = title || "Sin título";
         const now = Date.now();
-        this.createdAt = now;
-        this.updatedAt = now;
+        this.createdAt = createdAt || now;
+        this.updatedAt = updatedAt || now;
     }
 
     updateContent(newContent) {
