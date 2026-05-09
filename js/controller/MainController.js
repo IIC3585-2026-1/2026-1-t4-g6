@@ -1,0 +1,35 @@
+import { Note } from "../models/NoteModel";
+import { StorageManager } from "../utils/storage";
+
+export class MainController {
+    constructor() {
+        this.storage = new StorageManager();
+        this.notes = [];
+        this.currentNote = null;
+    }
+
+    async init() {
+        await this.storage.init();
+        await this.loadNotes();
+    }
+
+    async loadNotes() {
+        const notes = await this.storage.getAllNotes();
+        this.notes = notes.map(n => new Note(n));
+    }
+
+    async createNewNote() {
+        const newNote = new Note({ title: "Nueva Nota", content: "" });
+        await this.storage.saveNote(newNote);
+        this.notes.push(newNote);
+        return newNote;
+    }
+
+    async handleUpdateNote(id, newContent) {
+        const note = this.notes.find(n => n.id === id);
+        if (note) {
+            note.updateContent(newContent);
+            await this.storage.saveNote(note);
+        }
+    }
+}
