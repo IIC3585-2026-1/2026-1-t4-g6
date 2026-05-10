@@ -1,4 +1,4 @@
-import { MainController } from "./controller/mainController";
+import { MainController } from "./controller/mainController.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
   const app = new MainController();
