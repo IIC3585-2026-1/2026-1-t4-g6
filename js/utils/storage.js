@@ -36,7 +36,7 @@ export class StorageManager {
                 if (event.target.error.name == 'QuotaExceededError') {
                     reject("Te has quedado sin espacio en el navegador para guardar notas");
                 } else {
-                    reject("Error al guardar nota:", event.target.error);
+                    reject("Error al guardar nota: " + event.target.error);
                 }
             }
         });
