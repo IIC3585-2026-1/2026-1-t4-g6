@@ -12,7 +12,13 @@
   </head>
   <body class="fullscreen">
     <header class="app-header">
-      <h1>Banglen't</h1>
+      <div style="display: flex; align-items: center; gap: 10px">
+        <button id="btn-toggle-sidebar" class="menu-btn" aria-label="Menú">
+          ☰
+        </button>
+        <h1>Banglen't</h1>
+      </div>
+
       <div class="status-indicators">
         <span id="network-status" class="status online">Conectado</span>
         <span id="save-status" class="status saved">Guardado</span>
@@ -31,7 +37,7 @@
         <div class="editor-pane">
           <textarea
             id="markdown-input"
-            placeholder="Escribe tu nota en Markdown aquí..."
+            placeholder="Escribe tu nota aquí"
           ></textarea>
         </div>
         <div class="preview-pane">
