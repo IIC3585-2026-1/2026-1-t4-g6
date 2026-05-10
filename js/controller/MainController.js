@@ -38,6 +38,16 @@ export class MainController {
         return null;
     }
 
+    async handleUpdateTitle(id, newTitle) {
+        const note = this.notes.find(n => n.id === id);
+        if (note) {
+            note.updateTitle(newTitle);
+            await this.storage.saveNote(note);
+            return note;
+        }
+        return null;
+    }
+
     async deleteNote(id) {
         await this.storage.deleteNote(id);
 

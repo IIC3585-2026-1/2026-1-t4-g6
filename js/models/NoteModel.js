@@ -13,4 +13,9 @@ export class Note {
         this.content = newContent;
         this.updatedAt = Date.now();
     }
+
+    updateTitle(newTitle) {
+        this.title = newTitle;
+        this.updatedAt = Date.now();
+    }
 }
