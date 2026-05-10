@@ -1,14 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <title>Banglen't</title>
     <link rel="stylesheet" href="./css/main.css" />
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="./images/pwa-icon-256.png" />
-    <meta name="theme-color" content="white" />
+    <meta name="theme-color" content="#3b82f6" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="./js/config/firebase-config.js"></script>
   </head>
   <body class="fullscreen">
     <header class="app-header">
@@ -19,15 +20,31 @@
         <h1>Banglen't</h1>
       </div>
 
-      <div class="status-indicators">
-        <span id="network-status" class="status online">Conectado</span>
-        <span id="save-status" class="status saved">Guardado</span>
+      <div class="header-actions">
+        <div class="status-indicators">
+          <span id="network-status" class="status online">Conectado</span>
+          <span id="save-status" class="status saved">Guardado</span>
+        </div>
+        <button id="btn-enable-notifications" class="notification-button">
+          Activar notificaciones
+        </button>
       </div>
     </header>
 
     <main class="app-container">
       <aside class="sidebar" id="sidebar">
         <button id="btn-new-note">+ Nueva Nota</button>
+        <section class="notification-panel" aria-label="Estado de notificaciones">
+          <p id="notification-status" data-state="pending">
+            Revisando soporte de notificaciones
+          </p>
+          <textarea
+            id="notification-token"
+            readonly
+            hidden
+            aria-label="Token FCM para Firebase Console"
+          ></textarea>
+        </section>
         <ul id="note-list">
           <li class="active">Nota de ejemplo</li>
         </ul>
@@ -45,6 +62,10 @@
         </div>
       </section>
     </main>
+    <div id="notification-toast" class="notification-toast" hidden>
+      <strong class="notification-toast-title"></strong>
+      <p class="notification-toast-body"></p>
+    </div>
     <script type="module" src="./js/app.js"></script>
   </body>
 </html>

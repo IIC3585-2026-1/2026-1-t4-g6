@@ -1,11 +1,18 @@
-import { MainController } from "./controller/mainController.js";
+import { MainController } from "./controller/MainController.js";
 import { EditorView } from "./views/EditorView.js";
 import { SidebarView } from "./views/SidebarView.js";
+import { NotificationService } from "./services/notifications.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const app = new MainController();
   const sidebarView = new SidebarView();
   const editorView = new EditorView();
+  const notificationService = new NotificationService({
+    button: document.getElementById("btn-enable-notifications"),
+    status: document.getElementById("notification-status"),
+    tokenOutput: document.getElementById("notification-token"),
+    toast: document.getElementById("notification-toast"),
+  });
   const btnToggleSidebar = document.getElementById("btn-toggle-sidebar");
   const sidebar = document.getElementById("sidebar");
 
@@ -20,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("Aplicación iniciada correctamente");
 
     const notes = app.getSortedNotes();
-    let currentNote = notes.length > 0 ? notes : null;
+    let currentNote = notes.length > 0 ? notes[0] : null;
 
     if (currentNote) {
       app.setCurrentNote(currentNote.id);
@@ -40,6 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       app.setCurrentNote(newNote.id);
       sidebarView.renderNotes(app.getSortedNotes(), newNote.id);
       editorView.renderEditor(newNote);
+      notificationService.sendNoteCreatedPush(newNote);
     });
 
     sidebarView.bindOnSelectNote((id) => {
@@ -75,4 +83,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Falló el registro del Service Worker:", err);
     }
   }
+
+  notificationService.init();
 });

@@ -16,9 +16,13 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "push-server": "node server/push-server.js",
     "serve": "serve -l 8001 ."
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.6.0",
     "serve": "^14.2.6"
   }
 }
