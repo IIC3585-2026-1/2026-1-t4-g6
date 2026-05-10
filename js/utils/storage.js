@@ -32,7 +32,13 @@ export class StorageManager {
             const request = store.put({ ...note });
 
             request.onsuccess = () => resolve(true);
-            request.onerror = () => reject("Error al guardar nota");
+            request.onerror = (event) => {
+                if (event.target.error.name == 'QuotaExceededError') {
+                    reject("Te has quedado sin espacio en el navegador para guardar notas");
+                } else {
+                    reject("Error al guardar nota:", event.target.error);
+                }
+            }
         });
     }
 
@@ -56,5 +62,14 @@ export class StorageManager {
             request.onsuccess = () => resolve(true);
             request.onerror = () => reject("Error al eliminar nota");
         });
+    }
+
+    async checkQuota() {
+        if (navigator.storage && navigator.storage.estimate) {
+            const quota = await navigator.storage.estimate();
+            const percentageUsed = (quota.usage / quota.quota) * 100;
+            return percentageUsed;
+        }
+        return 0
     }
 }
