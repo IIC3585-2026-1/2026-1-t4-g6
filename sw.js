@@ -1,5 +1,14 @@
-let cacheName = "my-first-pwa";
-let filesToCache = ["/", "/index.html", "/css/main.css", "/js/app.js"];
+let cacheName = "banglent";
+
+let filesToCache = [
+  "/",
+  "./index.html",
+  "./css/main.css",
+  "./js/app.js",
+  "./js/controller/MainController.js",
+  "./js/models/NoteModel.js",
+  "./js/utils/storage.js"
+];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -7,7 +16,22 @@ self.addEventListener("install", (e) => {
       return cache.addAll(filesToCache);
     })
   );
+  self.skipWaiting();
 });
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cName) => {
+          if (cName !== cacheName) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  )
+})
 
 self.addEventListener("fetch", (e) => {
   e.respondWith(
