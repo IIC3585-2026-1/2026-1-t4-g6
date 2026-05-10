@@ -18,8 +18,11 @@ export class MainController {
         this.notes = notes.map(n => new Note(n));
     }
 
-    async createNewNote() {
-        const newNote = new Note({ title: "Nueva Nota", content: "" });
+    async createNewNote(initialTitle = "Nueva Nota", initialContent = "") {
+        const newNote = new Note({
+            title: initialTitle,
+            content: initialContent
+        });
         await this.storage.saveNote(newNote);
         this.notes.push(newNote);
         return newNote;
@@ -30,6 +33,27 @@ export class MainController {
         if (note) {
             note.updateContent(newContent);
             await this.storage.saveNote(note);
+            return note;
         }
+        return null;
+    }
+
+    async deleteNote(id) {
+        await this.storage.deleteNote(id);
+
+        this.notes = this.notes.filter(n => n.id !== id);
+
+        if (this.currentNote && this.currentNote.id === id) {
+            this.currentNote = null;
+        }
+    }
+
+    setCurrentNote(id) {
+        this.currentNote = this.notes.find(n => n.id === id) || null;
+        return this.currentNote;
+    }
+
+    getSortedNotes() {
+        return [...this.notes].sort((a, b) => b.updatedAt - a.updatedAt);
     }
 }
