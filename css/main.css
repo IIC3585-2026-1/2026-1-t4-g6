@@ -1,19 +1,171 @@
+/* style.css */
+:root {
+  --bg-color: #ffffff;
+  --border-color: #e2e8f0;
+  --sidebar-bg: #f8fafc;
+  --text-color: #334155;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Previene scroll en toda la página, típico de PWAs */
+  color: var(--text-color);
 }
 
-html,
-.fullscreen {
-display: flex;
-height: 100%;
-margin: 0;
-padding: 0;
-width: 100%;
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
-.container {
-margin: auto;
+.app-header h1 {
+  font-size: 1.2rem;
+  color: var(--text-color);
 }
-.title {
-font-size: 3rem;
+
+.status {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+  font-weight: 500;
+}
+.online {
+  background: #dcfce7;
+  color: #166534;
+}
+.offline {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.saved {
+  color: #64748b;
+  font-style: italic;
+}
+.saving {
+  color: var(--primary-color);
+}
+
+/* Layout principal */
+.app-container {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 53px);
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar button {
+  padding: 10px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 15px;
+  transition: background 0.2s;
+}
+
+.sidebar button:hover {
+  background: var(--primary-hover);
+}
+
+#note-list {
+  list-style: none;
+  overflow-y: auto;
+}
+
+#note-list li {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+}
+
+#note-list li:hover {
+  background: #e2e8f0;
+}
+#note-list li.active {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 500;
+}
+
+/* Workspace (Split Screen) */
+.workspace {
+  display: flex;
+  flex: 1;
+}
+
+.editor-pane,
+.preview-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-pane {
+  border-right: 1px solid var(--border-color);
+}
+
+#markdown-input {
+  flex: 1;
+  padding: 20px;
+  border: none;
+  resize: none;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1rem;
+  line-height: 1.5;
+  outline: none;
+  background: #fafafa;
+}
+
+#markdown-preview {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: var(--bg-color);
+  line-height: 1.6;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .workspace {
+    flex-direction: column;
+  }
+  .editor-pane {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .sidebar {
+    display: none; /* En una versión futura puedes agregar un botón de menú para mostrarla */
+  }
 }
